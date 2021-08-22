@@ -1,4 +1,5 @@
 const express = require("express");
+const app = express();
 
 const someUser = {
   first_name: "Jolyne",
@@ -25,6 +26,9 @@ exports.blog_post_comment_POST = (req, res) => {
 exports.blog_post_create_GET = (req, res) => {
   res.status(200).send("Create a blog post - GET");
 };
+
+// Reroute to index
+exports.blog_posts_GET = (req, res) => res.redirect("/");
 
 // Create Blog-post - POST
 exports.blog_post_create_POST = (req, res) => {
