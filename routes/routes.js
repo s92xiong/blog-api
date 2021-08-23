@@ -14,7 +14,7 @@ router.post("/posts/:postId", commentController.create_comment_POST);
 
 // FORM TO CREATE A BLOG
 router.get("/create-post/", blogController.create_blog_post_GET);
-router.post("/create-post/", blogController.create_blog_post_POST);
+router.post("/create-post/", blogController.create_blog_post_POST); // Completed
 
 router.delete("/posts/:postId", blogController.blog_post_DELETE);
 router.put("/posts/:postId", blogController.blog_post_PUT);

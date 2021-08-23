@@ -1,5 +1,7 @@
 const express = require("express");
-const app = express();
+const { body, validationResult } = require("express-validator");
+const Blog = require("../models/blogpostModel");
+const Comment = require('../models/commentModel');
 
 // Blog-post Comment - POST
 exports.create_comment_POST = (req, res) => {

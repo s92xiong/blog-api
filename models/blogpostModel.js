@@ -4,9 +4,9 @@ const { DateTime } = require("luxon");
 
 const BlogPostSchema = new Schema({
   title: { type: String, required: true, minLength: 1, maxLength: 100 },
-  timestamp: { type: Date, default: Date.now, required: true },
+  timestamp: { type: Date, default: Date.now },
   text: { type: String, required: true, minLength: 1 },
-  // messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
 });
 
 BlogPostSchema.virtual("date").get(function() {
