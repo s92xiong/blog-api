@@ -7,14 +7,14 @@ const someUser = {
   stand: "Stone Free",
 };
 
-// Home page - GET
+// Home page
 exports.index = (req, res) => {
   res.status(200).send("Welcome!");
 };
 
 // Blog-post - GET
 exports.blog_post_GET = (req, res) => {
-  res.status(200).send("Blog Post Page - GET REQUEST");
+  res.status(200).send(`Blog Post Page - GET REQUEST: id: ${req.params.postId}`);
 };
 
 // Blog-post Comment - POST
