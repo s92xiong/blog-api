@@ -5,12 +5,12 @@ const commentController = require("../controllers/commentController");
 const router = express.Router();
 
 // HOME PAGE
-router.get("/", indexController.index);
-router.get("/posts", indexController.blog_posts_GET);
+router.get("/", indexController.index); // Completed (home page renders all blog posts)
+router.get("/posts", indexController.blog_posts_GET); // Completed (reroutes home/index)
 
 // BLOG POST
-router.get("/posts/:postId", blogController.blog_post_GET);
-router.post("/posts/:postId", commentController.create_comment_POST);
+router.get("/posts/:postId", blogController.blog_post_GET); // Completed (Show blog post and comments)
+router.post("/posts/:postId", commentController.create_comment_POST); // Completed (Add comment to blog post)
 
 // FORM TO CREATE A BLOG
 router.get("/create-post/", blogController.create_blog_post_GET);
