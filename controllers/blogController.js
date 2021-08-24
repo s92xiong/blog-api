@@ -1,11 +1,16 @@
-const express = require("express");
 const { body, validationResult } = require("express-validator");
 const Blog = require("../models/blogModel");
-const Comment = require('../models/commentModel');
+// const Comment = require('../models/commentModel');
 
 //  Show a specific blog post
-exports.blog_post_GET = (req, res) => {
-  res.status(200).send(`Blog Post Page - GET REQUEST: id: ${req.params.postId}`);
+exports.blog_post_GET = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.postId);
+    res.json(blog);
+  } catch (err) {
+    console.error(err);
+    return res.status(404).send("Error: cannot access blog post");
+  }
 };
 
 // Show a form to create a blog post
@@ -14,34 +19,26 @@ exports.create_blog_post_GET = (req, res) => {
 };
 
 // Form logic to create a blog post
-exports.create_blog_post_POST = [
-  body("title").trim().isLength({ min: 1 }).escape(),
-  body("text").trim().isLength({ min: 1 }).escape(),
-
-  async (req, res) => {
-    try {
-      // Obtain blog input
-      const { title, text } = req.body;
-      
-      // Validate blog input
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).send("Error with one or more input fields!");
-      }
+exports.create_blog_post_POST = async (req, res) => {
+  try {
+    // Obtain blog input
+    const { title, text } = req.body;
     
-      // Add blog data to MongoDB & return blog input
-      const blog = await Blog.create({ 
-        title,
-        text
-      });
+    // Validate blog input
+    if (!(title && text)) return res.status(400).send("Error with one or more input fields!");
+  
+    // Add blog data to MongoDB & return blog input
+    const blog = await Blog.create({ 
+      title,
+      text
+    });
 
-      res.status(201).json(blog);
-      
-    } catch (err) {
-      console.error(err);
-    }
+    res.status(201).json(blog);
+    
+  } catch (err) {
+    console.error(err);
   }
-];
+};
 
 // Delete a blog post
 exports.blog_post_DELETE = (req, res) => {
