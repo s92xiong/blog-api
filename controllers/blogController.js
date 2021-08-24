@@ -1,6 +1,4 @@
-const { body, validationResult } = require("express-validator");
 const Blog = require("../models/blogModel");
-// const Comment = require('../models/commentModel');
 
 //  Show a specific blog post
 exports.blog_post_GET = async (req, res) => {

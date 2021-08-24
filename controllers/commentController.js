@@ -1,35 +1,26 @@
-const express = require("express");
-const { body, validationResult } = require("express-validator");
-const Blog = require("../models/blogModel");
 const Comment = require('../models/commentModel');
 
 // Blog-post Comment - POST
-exports.create_comment_POST = [
-  // body("name").trim().escape(),
-  // body("text").trim().isLength({ min: 1 }).escape(),
-
-  async (req, res) => {
-    console.log(req.params.postId);
-    // try {
-    //   // Obtain blog input
-    //   const { title, text } = req.body;
-      
-    //   // Validate blog input
-    //   const errors = validationResult(req);
-    //   if (!errors.isEmpty()) {
-    //     return res.status(400).send("Error with one or more input fields!");
-    //   }
+exports.create_comment_POST = async (req, res, next) => {
+  try {
+    // Obtain comment input
+    const { name, text } = req.body;
     
-    //   // Add blog data to MongoDB & return blog input
-    //   const blog = await Blog.create({ 
-    //     title,
-    //     text
-    //   });
+    // Validate comment input
+    if (!(name && text)) {
+      return res.status(400).send("Error with one or more input fields!");
+    }
+  
+    // Add comment data to MongoDB & return comment input
+    const comment = await Comment.create({ 
+      name,
+      text,
+      blog_post: req.params.postId // save the blogpost ID to the comment
+    });
 
-    //   res.status(201).json(blog);
-      
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    return res.status(201).json(comment);
+    
+  } catch (err) {
+    console.error(err);
   }
-];
+}
