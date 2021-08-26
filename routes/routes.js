@@ -3,10 +3,11 @@ const indexController = require("../controllers/indexController");
 const userController = require("../controllers/userController");
 const blogController = require("../controllers/blogController");
 const commentController = require("../controllers/commentController");
+const auth = require("../middleware/auth");
 const router = express.Router();
 
 // HOME PAGE
-router.get("/", indexController.index); // Completed (home page renders all blog posts)
+router.get("/", auth, indexController.index); // Completed (home page renders all blog posts)
 router.get("/posts", indexController.blog_posts_GET); // Completed (reroutes home/index)
 
 // USER ROUTES & AUTHENTICATION
