@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 
+// REGISTER A USER
 exports.register = [
   // Validate username and check if username is already taken
   body("username")
@@ -22,10 +23,10 @@ exports.register = [
     .isLength({ min: 6 })
     .withMessage("Password must be 6 or more characters"),
 
-  // Handle potential form errors
-  async (req, res, next) => {
+    async (req, res, next) => {
+    // Handle potential form errors, return errors as json
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).send(errors.array());
+    if (!errors.isEmpty()) return res.status(400).json(errors.array());
 
     const { username, password } = req.body;
     
@@ -39,18 +40,7 @@ exports.register = [
         password: hashedPassword   
       });
 
-      // Create token
-      const token = jwt.sign(
-        { username },
-        process.env.TOKEN_KEY,
-        { expiresIn: "1h" }
-      );
-
-      // Save user token
-      const userReturnValue = {...user};
-      userReturnValue._doc.token = token;
-
-      return res.status(201).json(userReturnValue._doc);
+      return res.status(201).json(user);
 
     } catch (err) {
       return next(err);
@@ -58,47 +48,44 @@ exports.register = [
   }
 ];
 
+// LOGIN USER
 exports.login = [
+  // Verify username
   body("username").custom(async (username) => {
     try {
-      const isUserValid = await User.findOne({ username });
-      if (!isUserValid) throw new Error("Username does not exist");
+      const checkUsername = await User.findOne({ username });
+      if (!checkUsername) throw new Error("Username does not exist");
     } catch (err) {
       throw new Error(err);
     }
   }),
+
+  // Verify password
   body("password").custom(async (password, { req }) => {
     bcrypt.compare(password, req.body.password, (err) => {
       if (err) throw new Error("Incorrect password");
-      else return true;
     });
   }),
 
   async (req, res, next) => {
-    // Check for errors in the form fields
+    // Handle potential form errors, return errors as json
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).send(errors.array());
+    if (!errors.isEmpty()) return res.status(400).json(errors.array());
     
     try {
       const { username } = req.body;
       const user = await User.findOne({ username });
 
       const token = jwt.sign(
-        { username },
+        { user },
         process.env.TOKEN_KEY,
         { expiresIn: "1h" }
       );
 
-      // Save user token
-      const userReturnValue = {...user};
-      userReturnValue._doc.token = token;
-
-
-      // User
-      res.status(200).json(userReturnValue._doc);
+      // Return token
+      res.json(token);
 
     } catch (err) {
-      console.error(err);
       return next(err);
     }
   }
