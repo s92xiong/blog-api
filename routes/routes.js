@@ -10,17 +10,15 @@ const router = express.Router();
 router.get("/", indexController.index); // Completed (home page renders all blog posts)
 router.get("/posts", indexController.blog_posts_GET); // Completed (reroutes home/index)
 
-// USER ROUTES & AUTHENTICATION
+// AUTH ROUTES
 router.post("/register", userController.register); // Completed
 router.post("/login", userController.login); // Completed
-// router.get("/logout", userController.logout); // Completed
 
 // BLOG POST
 router.get("/posts/:postId", blogController.blog_post_GET); // Completed (Show blog post and comments)
 router.post("/posts/:postId", commentController.create_comment_POST); // Completed (Add comment to blog post)
 
-// FORM TO CREATE A BLOG
-router.get("/create-post/", blogController.create_blog_post_GET);
+// CREATE A BLOG POST
 router.post("/create-post/", auth, blogController.create_blog_post_POST); // Completed
 
 router.delete("/posts/:postId", blogController.blog_post_DELETE);

@@ -20,11 +20,6 @@ exports.blog_post_GET = async (req, res, next) => {
   }
 };
 
-// Show a form to create a blog post
-exports.create_blog_post_GET = (req, res) => {
-  res.status(200).send("Create a blog post - GET");
-};
-
 // Form logic to create a blog post
 exports.create_blog_post_POST = async (req, res) => {
   try {
@@ -32,7 +27,7 @@ exports.create_blog_post_POST = async (req, res) => {
     const { title, text } = req.body;
     
     // Validate blog input
-    if (!(title && text)) return res.status(400).send("Error with one or more input fields!");
+    if (!(title && text)) return res.status(400).json({ error: "Error with one or more input fields!" });
   
     // Add blog data to MongoDB & return blog input
     const blog = await Blog.create({ 
