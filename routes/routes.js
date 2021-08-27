@@ -13,7 +13,7 @@ router.get("/posts", indexController.blog_posts_GET); // Completed (reroutes hom
 // USER ROUTES & AUTHENTICATION
 router.post("/register", userController.register); // Completed
 router.post("/login", userController.login); // Completed
-router.get("/logout", userController.logout); // Completed
+// router.get("/logout", userController.logout); // Completed
 
 // BLOG POST
 router.get("/posts/:postId", blogController.blog_post_GET); // Completed (Show blog post and comments)
