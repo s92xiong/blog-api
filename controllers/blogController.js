@@ -42,12 +42,23 @@ exports.create_blog_post_POST = async (req, res) => {
   }
 };
 
+// Update a blog post
+exports.blog_post_PUT = async (req, res, next) => {
+  try {
+    // Get input
+    const { title, text } = req.body;
+
+    // Query for the specific blog post and update with inputs
+    const blog = await Blog.findByIdAndUpdate(req.params.postId, { title, text });
+    if (!blog) return res.status(404).json({ error: "Error updating blog" });
+    res.status(201).json({ message: "Successfully updated blog post" });
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+};
+
 // Delete a blog post
 exports.blog_post_DELETE = (req, res) => {
   res.status(200).send("Delete a blog post - DELETE");
-};
-
-// Update a blog post
-exports.blog_post_PUT = (req, res) => {
-  res.status(200).send("Update a blog post - PUT");
 };
