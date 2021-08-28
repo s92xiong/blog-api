@@ -69,7 +69,7 @@ exports.blog_post_DELETE = async (req, res, next) => {
 
     if (!deleteBlog || !deleteComment) return res.status(404).json({ error: "Error with deletion" });
     
-    res.status(201).json({ message: `Blog post with ID: ${req.params.postId} was successfully deleted` });
+    res.status(201).json({ message: `Blog post with ID: ${req.params.postId} was successfully deleted as well as all comments associated with it` });
   } catch (err) {
     console.log(err);
     return next(err);
