@@ -24,7 +24,6 @@ router.post("/create-post/", auth, blogController.create_blog_post_POST); // Com
 router.put("/posts/:postId", auth, blogController.blog_post_PUT); // Completed
 router.delete("/posts/:postId", auth, blogController.blog_post_DELETE); // Completed
 
-// Create a route to delete a comment
-// router.delete("/posts/:postId/comments/:commentId", commentController.comment_delete_DELETE);
+router.delete("/posts/:postId/comments/:commentId", auth, commentController.comment_delete_DELETE);
 
 module.exports = router;
