@@ -23,4 +23,14 @@ exports.create_comment_POST = async (req, res, next) => {
   } catch (err) {
     console.error(err);
   }
-}
+};
+
+exports.comment_delete_DELETE = async (req, res, next) => {
+  try {
+    const deleteComment = await Comment.findByIdAndDelete(req.params.commentId);
+    if (!deleteComment) return res.status(404).json({ error: "Error deleting comment "});
+    return res.status(201).json({ message: `Successfully deleted comment with id: ${req.params.commentId}` });
+  } catch (err) {
+    return next(err);
+  }
+};
