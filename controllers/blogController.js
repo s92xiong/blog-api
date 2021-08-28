@@ -61,9 +61,15 @@ exports.blog_post_PUT = async (req, res, next) => {
 // Delete a blog post
 exports.blog_post_DELETE = async (req, res, next) => {
   try {
-    const blog = await Blog.findByIdAndDelete(req.params.postId);
-    if (!blog) return res.status(404).json({ error: "Error deleting blog" });
-    res.status(201).json({ message: `Blog post with ID: ${req.params.id} was successfully deleted` });
+    
+    const [deleteBlog, deleteComment] = await Promise.all([
+      Blog.findByIdAndDelete(req.params.postId),
+      Comment.deleteMany({ "blog_post": req.params.postId })
+    ]);
+
+    if (!deleteBlog || !deleteComment) return res.status(404).json({ error: "Error with deletion" });
+    
+    res.status(201).json({ message: `Blog post with ID: ${req.params.postId} was successfully deleted` });
   } catch (err) {
     console.log(err);
     return next(err);
