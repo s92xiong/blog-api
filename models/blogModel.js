@@ -7,6 +7,7 @@ const BlogSchema = new Schema({
   timestamp: { type: Date, default: Date.now },
   text: { type: String, required: true, minLength: 1 },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  image: { type: String },
 });
 
 BlogSchema.virtual("date").get(function() {
