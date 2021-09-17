@@ -24,7 +24,7 @@ exports.blog_post_GET = async (req, res, next) => {
 exports.create_blog_post_POST = async (req, res) => {
   try {
     // Obtain blog input
-    const { title, text } = req.body;
+    const { title, sub_title, text, image } = req.body;
     
     // Validate blog input
     if (!(title && text)) return res.status(400).json({ error: "Error with one or more input fields!" });
@@ -32,7 +32,9 @@ exports.create_blog_post_POST = async (req, res) => {
     // Add blog data to MongoDB & return blog input
     const blog = await Blog.create({ 
       title,
-      text
+      sub_title,
+      text,
+      image
     });
 
     res.status(201).json(blog);
