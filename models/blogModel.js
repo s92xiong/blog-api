@@ -4,7 +4,7 @@ const { DateTime } = require("luxon");
 
 const BlogSchema = new Schema({
   title: { type: String, required: true, minLength: 1, maxLength: 100 },
-  sub_title: { type: String, required: true, minLength: 1, maxLength: 100 },
+  sub_title: { type: String, minLength: 1, maxLength: 100 },
   timestamp: { type: Date, default: Date.now },
   text: { type: String, required: true, minLength: 1 },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
