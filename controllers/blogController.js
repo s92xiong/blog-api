@@ -48,10 +48,10 @@ exports.create_blog_post_POST = async (req, res) => {
 exports.blog_post_PUT = async (req, res, next) => {
   try {
     // Get input
-    const { title, text } = req.body;
+    const { title, text, sub_title, image } = req.body;
 
     // Query for the specific blog post and update with inputs
-    const blog = await Blog.findByIdAndUpdate(req.params.postId, { title, text });
+    const blog = await Blog.findByIdAndUpdate(req.params.postId, { title, text, sub_title, image });
     if (!blog) return res.status(404).json({ error: "Error updating blog" });
     res.status(201).json({ message: "Successfully updated blog post" });
   } catch (err) {
