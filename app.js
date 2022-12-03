@@ -6,8 +6,10 @@ const logger = require('morgan');
 const cors = require("cors");
 const mongoose = require("mongoose");
 
+const mongoDB = process.env.MONGODB_URI;
+
 // Establish db connection
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(`${mongoDB}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
