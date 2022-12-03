@@ -3,22 +3,17 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const dotenv = require('dotenv');
-dotenv.config({ path: './.env' });
+dotenv.config();
 
 // Establish db connection
-const mongoose = require("mongoose");
-const mongoDB = process.env.MONGODB_URI;
-mongoose.connect(mongoDB, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => {
-  console.log("Successfully connected ");
-}).catch((error) => {
-  console.log(`can not connect to database, ${error}`);
+  useCreateIndex: true,
 });
-
 
 const routes = require('./routes/routes');
 
