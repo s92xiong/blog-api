@@ -3,16 +3,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require("cors");
+const routes = require('./routes/routes');
+const { connectDB } = require('./connectDB');
 require("dotenv").config();
 
-// Establish db connection
-const mongoose = require("mongoose");
-const mongoDB = process.env.MONGODB_URI;
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const routes = require('./routes/routes');
-
 const app = express();
+connectDB();
 
 app.use(logger('dev'));
 app.use(express.json());
