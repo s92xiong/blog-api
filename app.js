@@ -7,8 +7,7 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 
 // Establish db connection
-const mongoDB = 'mongodb+srv://s92xiong:s92xiong-blog-api@cluster0.xfmld.mongodb.net/blog-api-db?retryWrites=true&w=majority';
-mongoose.connect(mongoDB, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
