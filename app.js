@@ -7,7 +7,7 @@ require("dotenv").config();
 
 // Establish db connection
 const mongoose = require("mongoose");
-const mongoDB = process.env.MONGODB_URI;
+const mongoDB = process.env.MONGODB_URI.toString();
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const routes = require('./routes/routes');
