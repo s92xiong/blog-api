@@ -6,10 +6,10 @@ const logger = require('morgan');
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const mongoDB = process.env.MONGODB_URI;
+const MONGODB_URI = `mongodb+srv://s92xiong:${process.env.MONGODB_URI_pw}@cluster0.xfmld.mongodb.net/${process.env.MONGODB_URI_db}?retryWrites=true&w=majority`
 
 // Establish db connection
-mongoose.connect(`${mongoDB}`, {
+mongoose.connect(`${MONGODB_URI}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
